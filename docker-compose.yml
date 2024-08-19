@@ -1,0 +1,29 @@
+services:
+  dev: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    command: ["pnpm", "run", "dev"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    volumes:
+      - .:/app/
+  prod: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    command: ["pnpm", "run", "build"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+  api: 
+    image: dotronglong/faker:stable
+    volumes:
+      - .api:/app/mocks
+    ports: 
+      - "3030:3030"
